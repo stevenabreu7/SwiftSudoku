@@ -66,12 +66,12 @@
 				B0B5C9961EC1B05500F33BFA /* GameScene.sks */,
 				B0B5C9981EC1B05500F33BFA /* Actions.sks */,
 				B0B5C99A1EC1B05500F33BFA /* GameScene.swift */,
+				B0B5C9AD1EC1B90A00F33BFA /* Board.swift */,
 				B0B5C99C1EC1B05500F33BFA /* GameViewController.swift */,
 				B0B5C99E1EC1B05500F33BFA /* Main.storyboard */,
 				B0B5C9A11EC1B05500F33BFA /* Assets.xcassets */,
 				B0B5C9A31EC1B05500F33BFA /* LaunchScreen.storyboard */,
 				B0B5C9A61EC1B05500F33BFA /* Info.plist */,
-				B0B5C9AD1EC1B90A00F33BFA /* Board.swift */,
 			);
 			path = Sudoku;
 			sourceTree = "<group>";
