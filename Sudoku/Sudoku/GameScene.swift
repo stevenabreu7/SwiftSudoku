@@ -14,6 +14,7 @@ class GameScene: SKScene {
     var textNodes: [[SKLabelNode]] = Array(repeating: Array(repeating: SKLabelNode(), count: 9), count: 9)
     var buttons: [SKLabelNode] = Array(repeating: SKLabelNode(), count: 9)
     var touched = (-1,-1)
+    var board: Board!
     
     override func didMove(to view: SKView) {
         
@@ -42,6 +43,26 @@ class GameScene: SKScene {
             buttons[i] = button
             self.addChild(buttons[i])
         }
+        
+        let _ = "726493815315728946489651237852147693673985124941362758194836572567214389238579461"
+        board = Board(board: "000490815315720940489651207852140090673985124941300758194806572000214389038579460")
+        
+        for i in 0...8 {
+            for j in 0...8 {
+                let num = board.getField(i: i, j: j)
+                textNodes[i][j].text = (num == 0) ? "-" : String(num)
+            }
+        }
+    }
+    
+    func checkBoard() {
+        if self.board.isSolved() {
+            print("YOU WIN!!")
+        } else if self.board.isFull() {
+            print("SOMETHINGS NOT RIGHT!")
+        } else {
+            print("KEEP GOING!")
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -59,12 +80,24 @@ class GameScene: SKScene {
                     }
                 }
             }
-            // select new number
+            // enter new number
             for i in 0...8 {
                 if touchedNodes.contains(buttons[i]) {
                     if self.touched != (-1,-1) {
                         let (first, second) = self.touched
-                        textNodes[first][second].text = String(i+1)
+                        let node = textNodes[first][second]
+                        // check correctness
+                        if self.board.moveCorrectness(row: first, col: second, number: i+1) == .incorrect {
+                            node.fontColor = UIColor.darkGray
+                        } else {
+                            node.fontColor = UIColor.white
+                        }
+                        // make move (or not)
+                        let result = self.board.makeMove(i: first, j: second, number: i+1)
+                        if result {
+                            print("valid move")
+                            node.text = String(i+1)
+                        }
                     }
                 }
             }
