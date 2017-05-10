@@ -26,7 +26,8 @@ class GameScene: SKScene {
     func setupBoard() {
         let _ = "726493815315728946489651237852147693673985124941362758194836572567214389238579461"
         let _ = "000490815315720940489651207852140090673985124941300758194806572000214389038579460"
-        board = Board(board: "000000810000720040400000207000140090673000000000300700004806572000200009038570000")
+        let _ = "000000810000720040400000207000140090673000000000300700004806572000200009038570000"
+        board = Board(board: "726493815315728946489651237852147693673985124941362758194836572567214389238579460")
         
         for i in 0...8 {
             for j in 0...8 {
@@ -38,8 +39,8 @@ class GameScene: SKScene {
     
     func setupView() {
         // general constants
-        let nodeSize = CGSize(width: 0.1111 * self.size.width, height: 0.1111 * self.size.width)
-        let basePosition = CGPoint(x: -0.5 * self.size.width + 0.5 * nodeSize.width, y: 0.5 * self.size.width - 0.5 * nodeSize.height)
+        let nodeSize = CGSize(width: 0.1 * self.size.width, height: 0.1 * self.size.width)
+        let basePosition = CGPoint(x: -0.45 * self.size.width + 0.5 * nodeSize.width, y: 0.45 * self.size.width - 0.5 * nodeSize.height)
         
         // title
         for i in 0...2 {
@@ -66,7 +67,7 @@ class GameScene: SKScene {
         let background = SKSpriteNode(texture: bgTexture)
         background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         background.position = CGPoint(x: 0, y: 0.3 * nodeSize.height)
-        background.size.width = self.size.width
+        background.size.width = self.size.width * 0.9
         background.size.height = background.size.width
         self.addChild(background)
         
@@ -77,6 +78,7 @@ class GameScene: SKScene {
                 let shapePosition = CGPoint(x: basePosition.x + (CGFloat(j) - 0.5) * nodeSize.width, y: basePosition.y - (CGFloat(i)+0.2) * nodeSize.height)
                 let shapeNode = SKShapeNode(rect: CGRect(origin: shapePosition, size: nodeSize))
                 shapeNode.fillColor = UIColor.clear
+                shapeNode.strokeColor = UIColor.clear
                 shapeNodes[i][j] = shapeNode
                 self.addChild(shapeNodes[i][j])
                 
@@ -109,11 +111,11 @@ class GameScene: SKScene {
     func checkBoard() {
         // check for win / loss / not done yet
         if self.board.isSolved() {
-            print("YOU WIN!!")
+            self.gameLabel.text = "YOU SOLVED IT!"
         } else if self.board.isFull() {
-            print("SOMETHINGS NOT RIGHT!")
+            self.gameLabel.text = "SOMETHING'S NOT RIGHT.."
         } else {
-            print("KEEP GOING!")
+            self.gameLabel.text = "KEEP PLAYING.."
         }
     }
     
@@ -149,6 +151,7 @@ class GameScene: SKScene {
                 } else {
                     node.fontColor = UIColor.white
                 }
+                checkBoard()
             }
         }
     }
@@ -187,6 +190,7 @@ class GameScene: SKScene {
         if let solutionBoard = search(self.board.fields) {
             self.board.fields = solutionBoard
             self.board.solved()
+            self.gameLabel.text = "AI SOLVED!"
         } else {
             print("failed.")
         }
