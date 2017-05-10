@@ -123,4 +123,98 @@ class Board {
             i += 1
         }
     }
+    
+    func solved() {
+        for i in 0...8 {
+            for j in 0...8 {
+                self.correct[i][j] = .correct
+            }
+        }
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////SOLVING ALGORITHM///////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    
+    func solution(_ fields: [[Int]]) -> Bool {
+        for i in 0...8 {
+            for j in 0...8 {
+                if fields[i][j] == 0 {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
+    func correctMove(_ fields: [[Int]], _ row: Int, _ col: Int, _ num: Int) -> Bool {
+        // check row.
+        for i in 0...8 {
+            if fields[row][i] == num {
+                return false
+            }
+        }
+        // check col.
+        for i in 0...8 {
+            if fields[i][col] == num {
+                return false
+            }
+        }
+        // check square.
+        let topLeftX = Int(row / 3) * 3
+        let topLeftY = Int(col / 3) * 3
+        for i in 0...2 {
+            for j in 0...2 {
+                if fields[topLeftX+i][topLeftY+j] == num {
+                    return false
+                }
+            }
+        }
+        // all good -> correct move
+        return true
+    }
+    
+    func choices(_ fields: [[Int]], _ row: Int, _ col: Int) -> [Int] {
+        var possibleMoves = [Int]()
+        for pos in 1...9 {
+            if correctMove(fields, row, col, pos) {
+                possibleMoves.append(pos)
+            }
+        }
+        return possibleMoves
+    }
+    
+    func search(_ fields: [[Int]]) -> [[Int]]? {
+        if solution(fields) {
+            return fields
+        } else {
+            var fieldz = fields
+            var freeX = -1
+            var freeY = -1
+            for i in 0...8 {
+                for j in 0...8 {
+                    if fields[i][j] == 0 {
+                        freeX = i
+                        freeY = j
+                    }
+                }
+            }
+            for choice in choices(fields, freeX, freeY) {
+                fieldz[freeX][freeY] = choice
+                let x = search(fieldz)
+                if x != nil {
+                    return x
+                }
+                fieldz[freeX][freeY] = 0
+            }
+            return nil
+        }
+    }
+    
+    func solve() -> [[Int]]? {
+        // check whether the self.fields is correct itself??
+        return search(self.fields)
+    }
 }
