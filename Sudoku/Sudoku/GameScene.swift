@@ -25,12 +25,13 @@ class GameScene: SKScene {
     
     func setupBoard() {
         let _ = "726493815315728946489651237852147693673985124941362758194836572567214389238579461"
-        board = Board(board: "000490815315720940489651207852140090673985124941300758194806572000214389038579460")
+        let _ = "000490815315720940489651207852140090673985124941300758194806572000214389038579460"
+        board = Board(board: "000000810000720040400000207000140090673000000000300700004806572000200009038570000")
         
         for i in 0...8 {
             for j in 0...8 {
                 let num = board.getField(i: i, j: j)
-                textNodes[i][j].text = (num == 0) ? "-" : String(num)
+                textNodes[i][j].text = (num == 0) ? " " : String(num)
             }
         }
     }
@@ -43,6 +44,7 @@ class GameScene: SKScene {
         // title
         for i in 0...2 {
             let title = SKLabelNode(text: "SUDOKU")
+            title.name = "titleLabel"
             title.position = CGPoint(x: Double(i) * 7.5, y: Double(0.375 * self.size.height - CGFloat(i) * 5.0))
             title.fontColor = UIColor(white: CGFloat(0.1490196078) + CGFloat(i) * 0.3, alpha: 1.0)
             title.fontSize = 160
@@ -127,7 +129,6 @@ class GameScene: SKScene {
         } else {
             self.touched = (i,j)
             self.shapeNodes[i][j].fillColor = UIColor.lightGray
-            print(i,j)
         }
     }
     
@@ -152,6 +153,45 @@ class GameScene: SKScene {
         }
     }
     
+    func search(_ fields: [[Int]]) -> [[Int]]? {
+        if board.solution(fields) {
+            return fields
+        } else {
+            var fieldz = fields
+            var freeX = -1
+            var freeY = -1
+            for i in 0...8 {
+                for j in 0...8 {
+                    if fields[i][j] == 0 {
+                        freeX = i
+                        freeY = j
+                    }
+                }
+            }
+            for choice in board.choices(fields, freeX, freeY) {
+                fieldz[freeX][freeY] = choice
+                self.textNodes[freeX][freeY].text = String(choice)
+                let x = search(fieldz)
+                if x != nil {
+                    return x
+                }
+                fieldz[freeX][freeY] = 0
+                self.textNodes[freeX][freeY].text = String(0)
+            }
+            return nil
+        }
+    }
+    
+    func solveGame() {
+        print("solve now!")
+        if let solutionBoard = search(self.board.fields) {
+            self.board.fields = solutionBoard
+            self.board.solved()
+        } else {
+            print("failed.")
+        }
+    }
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             let touchedNodes = nodes(at: t.location(in: self))
@@ -168,6 +208,9 @@ class GameScene: SKScene {
                 if touchedNodes.contains(buttons[i]) {
                     pressedNumber(i+1)
                 }
+            }
+            if touchedNodes.contains(self.childNode(withName: "titleLabel")!) {
+                solveGame()
             }
         }
     }
