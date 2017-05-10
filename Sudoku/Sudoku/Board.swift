@@ -77,9 +77,6 @@ class Board {
         }else {
             // save if correct and then make move.
             let c = self.moveCorrectness(row: i, col: j, number: number)
-            if c == .incorrect {
-                print("incorrect move")
-            }
             self.correct[i][j] = c
             self.fields[i][j] = number
             return true
@@ -116,9 +113,6 @@ class Board {
             if let number = Int(String(char)) {
                 let result = self.makeMove(i: i / 9, j: i % 9, number: number)
                 self.changeable[i/9][i%9] = !result
-                if !result {
-                    print("incorrect:", i/9, i%9)
-                }
             }
             i += 1
         }
