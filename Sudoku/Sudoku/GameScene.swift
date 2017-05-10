@@ -12,38 +12,18 @@ import GameplayKit
 class GameScene: SKScene {
     
     var textNodes: [[SKLabelNode]] = Array(repeating: Array(repeating: SKLabelNode(), count: 9), count: 9)
+    var shapeNodes: [[SKShapeNode]] = Array(repeating: Array(repeating: SKShapeNode(), count: 9), count: 9)
     var buttons: [SKLabelNode] = Array(repeating: SKLabelNode(), count: 9)
+    var gameLabel: SKLabelNode!
     var touched = (-1,-1)
     var board: Board!
     
     override func didMove(to view: SKView) {
-        
-        let nodeSize = CGSize(width: 0.1111 * self.size.width, height: 0.1111 * self.size.width)
-        let basePosition = CGPoint(x: -0.5 * self.size.width + 0.5 * nodeSize.width, y: 0.5 * self.size.width - 0.5 * nodeSize.height)
-        for i in 0...8 {
-            for j in 0...8 {
-                let node: SKLabelNode = SKLabelNode(fontNamed: "Futura-CondensedMedium")
-                node.text = "0"
-                node.fontSize = 60
-                node.fontColor = UIColor.white
-                node.horizontalAlignmentMode = .center
-                node.position.x = basePosition.x + CGFloat(j) * nodeSize.width
-                node.position.y = basePosition.y - CGFloat(i) * nodeSize.height
-                textNodes[i][j] = node
-                self.addChild(textNodes[i][j])
-            }
-        }
-        for i in 0...8 {
-            let button = SKLabelNode(fontNamed: "Futura-CondensedMedium")
-            button.position.y = -0.4 * self.size.height
-            button.position.x = -0.4 * self.size.width + CGFloat(i) * 0.1 * self.size.width
-            button.fontColor = UIColor.white
-            button.fontSize = 70
-            button.text = String(i+1)
-            buttons[i] = button
-            self.addChild(buttons[i])
-        }
-        
+        setupView()
+        setupBoard()
+    }
+    
+    func setupBoard() {
         let _ = "726493815315728946489651237852147693673985124941362758194836572567214389238579461"
         board = Board(board: "000490815315720940489651207852140090673985124941300758194806572000214389038579460")
         
@@ -55,7 +35,77 @@ class GameScene: SKScene {
         }
     }
     
+    func setupView() {
+        // general constants
+        let nodeSize = CGSize(width: 0.1111 * self.size.width, height: 0.1111 * self.size.width)
+        let basePosition = CGPoint(x: -0.5 * self.size.width + 0.5 * nodeSize.width, y: 0.5 * self.size.width - 0.5 * nodeSize.height)
+        
+        // title
+        for i in 0...2 {
+            let title = SKLabelNode(text: "SUDOKU")
+            title.position = CGPoint(x: Double(i) * 7.5, y: Double(0.375 * self.size.height - CGFloat(i) * 5.0))
+            title.fontColor = UIColor(white: CGFloat(0.1490196078) + CGFloat(i) * 0.3, alpha: 1.0)
+            title.fontSize = 160
+            title.zPosition = CGFloat(10 - i)
+            title.fontName = "Futura-CondensedMedium"
+            self.addChild(title)
+        }
+        
+        // game label
+        gameLabel = SKLabelNode(fontNamed: "Futura-CondensedMedium")
+        gameLabel.position.x = 0.0
+        gameLabel.position.y = -0.35 * self.size.height
+        gameLabel.fontSize = 50
+        gameLabel.text = "KEEP PLAYING.."
+        self.addChild(gameLabel)
+        
+        // background image
+        let bgTexture = SKTexture(image: #imageLiteral(resourceName: "Background"))
+        let background = SKSpriteNode(texture: bgTexture)
+        background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        background.position = CGPoint(x: 0, y: 0.3 * nodeSize.height)
+        background.size.width = self.size.width
+        background.size.height = background.size.width
+        self.addChild(background)
+        
+        // board
+        for i in 0...8 {
+            for j in 0...8 {
+                // shape nodes
+                let shapePosition = CGPoint(x: basePosition.x + (CGFloat(j) - 0.5) * nodeSize.width, y: basePosition.y - (CGFloat(i)+0.2) * nodeSize.height)
+                let shapeNode = SKShapeNode(rect: CGRect(origin: shapePosition, size: nodeSize))
+                shapeNode.fillColor = UIColor.clear
+                shapeNodes[i][j] = shapeNode
+                self.addChild(shapeNodes[i][j])
+                
+                // text nodes
+                let node: SKLabelNode = SKLabelNode(fontNamed: "Futura-CondensedMedium")
+                node.text = "0"
+                node.fontSize = 60
+                node.fontColor = UIColor.white
+                node.horizontalAlignmentMode = .center
+                node.position.x = basePosition.x + CGFloat(j) * nodeSize.width
+                node.position.y = basePosition.y - CGFloat(i) * nodeSize.height
+                textNodes[i][j] = node
+                self.addChild(textNodes[i][j])
+            }
+        }
+        
+        // buttons on the bottom
+        for i in 0...8 {
+            let button = SKLabelNode(fontNamed: "Futura-CondensedMedium")
+            button.position.y = -0.45 * self.size.height
+            button.position.x = -0.4 * self.size.width + CGFloat(i) * 0.1 * self.size.width
+            button.fontColor = UIColor.white
+            button.fontSize = 70
+            button.text = String(i+1)
+            buttons[i] = button
+            self.addChild(buttons[i])
+        }
+    }
+    
     func checkBoard() {
+        // check for win / loss / not done yet
         if self.board.isSolved() {
             print("YOU WIN!!")
         } else if self.board.isFull() {
@@ -65,7 +115,41 @@ class GameScene: SKScene {
         }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    func selectedNode(_ i: Int, _ j: Int) {
+        // selected node in board
+        if self.touched != (-1,-1) {
+            let (a,b) = self.touched
+            self.shapeNodes[a][b].fillColor = UIColor.clear
+        }
+        if self.touched == (i,j) {
+            self.touched = (-1,-1)
+            self.shapeNodes[i][j].fillColor = UIColor.clear
+        } else {
+            self.touched = (i,j)
+            self.shapeNodes[i][j].fillColor = UIColor.lightGray
+            print(i,j)
+        }
+    }
+    
+    func pressedNumber(_ num: Int) {
+        //pressed number button
+        if self.touched != (-1,-1) {
+            let (first, second) = self.touched
+            let node = textNodes[first][second]
+            // check correctness
+            let incorrect = self.board.moveCorrectness(row: first, col: second, number: num) == .incorrect
+            // make move
+            let result = self.board.makeMove(i: first, j: second, number: num)
+            // if move was valid, change the number and change the font color accordingly
+            if result {
+                node.text = String(num)
+                if incorrect {
+                    node.fontColor = UIColor.darkGray
+                } else {
+                    node.fontColor = UIColor.white
+                }
+            }
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -74,50 +158,17 @@ class GameScene: SKScene {
             // activate label
             for i in 0...8 {
                 for j in 0...8 {
-                    if touchedNodes.contains(textNodes[i][j]) {
-                        self.touched = (i,j)
-                        print(i,j)
+                    if touchedNodes.contains(shapeNodes[i][j]) {
+                        selectedNode(i, j)
                     }
                 }
             }
             // enter new number
             for i in 0...8 {
                 if touchedNodes.contains(buttons[i]) {
-                    if self.touched != (-1,-1) {
-                        let (first, second) = self.touched
-                        let node = textNodes[first][second]
-                        // check correctness
-                        if self.board.moveCorrectness(row: first, col: second, number: i+1) == .incorrect {
-                            node.fontColor = UIColor.darkGray
-                        } else {
-                            node.fontColor = UIColor.white
-                        }
-                        // make move (or not)
-                        let result = self.board.makeMove(i: first, j: second, number: i+1)
-                        if result {
-                            print("valid move")
-                            node.text = String(i+1)
-                        }
-                    }
+                    pressedNumber(i+1)
                 }
             }
         }
     }
-    
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-    }
 }
-
-
-// old code:
-//    var shapeNodes: [[SKShapeNode]] = Array(repeating: Array(repeating: SKShapeNode(), count: 9), count: 9)
-//                let shapePosition = CGPoint(x: basePosition.x + CGFloat(j) * nodeSize.width, y: basePosition.y - CGFloat(i) * nodeSize.height)
-//                let shapeNode = SKShapeNode(rect: CGRect(origin: shapePosition, size: nodeSize))
-//                shapeNode.strokeColor = UIColor.lightGray
-//                shapeNode.fillColor = UIColor.darkGray
-//                shapeNodes[i][j] = shapeNode
-//                self.addChild(shapeNodes[i][j])
-//
-//                self.shapeNodes[i][j].addChild(textNodes[i][j])

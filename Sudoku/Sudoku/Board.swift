@@ -71,7 +71,10 @@ class Board {
         } else if !self.changeable[i][j] {
             // if field is not changeable, don't make move
             return false
-        } else {
+        } else if self.fields[i][j] == number {
+            // don't allow making the same move again
+            return false
+        }else {
             // save if correct and then make move.
             let c = self.moveCorrectness(row: i, col: j, number: number)
             if c == .incorrect {
