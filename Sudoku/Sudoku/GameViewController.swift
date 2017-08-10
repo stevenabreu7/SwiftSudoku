@@ -11,27 +11,35 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        handleButtonPress()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                
-                // Present the scene
-                view.presentScene(scene)
-            }
-            
-            view.ignoresSiblingOrder = true
-            
-            view.showsFPS = true
-            view.showsNodeCount = true
-        }
+        self.view.backgroundColor = UIColor.black
     }
-
+    
+    @IBAction func easyPressed(_ sender: Any) {
+        handleButtonPress()
+    }
+    
+    @IBAction func mediumPressed(_ sender: Any) {
+        handleButtonPress()
+    }
+    
+    @IBAction func hardPressed(_ sender: Any) {
+        handleButtonPress()
+    }
+    
+    func handleButtonPress() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let vc = storyBoard.instantiateViewController(withIdentifier: "GameSceneViewController") as! GameSceneViewController
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     override var shouldAutorotate: Bool {
         return true
     }

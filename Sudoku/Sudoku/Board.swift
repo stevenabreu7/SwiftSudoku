@@ -33,6 +33,13 @@ class Board {
         self.parseBoard(board: board)
     }
     
+    init(_ random: Bool=false) {
+        self.fields = Array(repeating: Array(repeating: 0, count: 9), count: 9)
+        self.correct = Array(repeating: Array(repeating: .notset, count: 9), count: 9)
+        self.changeable = Array(repeating: Array(repeating: true, count: 9), count: 9)
+        self.fields = self.search(self.fields) ?? Array(repeating: Array(repeating: 0, count: 9), count: 9)
+    }
+    
     func getField(i: Int, j: Int) -> Int {
         return self.fields[i][j]
     }
@@ -177,6 +184,16 @@ class Board {
                 possibleMoves.append(pos)
             }
         }
+        // randomize choices before returning them
+        for i in 0..<(possibleMoves.count) {
+            for j in i+1..<(possibleMoves.count) {
+                if (arc4random() < arc4random()) {
+                    let helper = possibleMoves[j]
+                    possibleMoves[j] = possibleMoves[i]
+                    possibleMoves[i] = helper
+                }
+            }
+        }
         return possibleMoves
     }
     
@@ -208,7 +225,6 @@ class Board {
     }
     
     func solve() -> [[Int]]? {
-        // check whether the self.fields is correct itself??
         return search(self.fields)
     }
 }

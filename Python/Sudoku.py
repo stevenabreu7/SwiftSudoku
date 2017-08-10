@@ -3,6 +3,7 @@ class Board:
         """Creates a new, fresh Sudoku board."""
         self.fields = [[0 for i in range(9)] for j in range(9)]
         self.correct = [[None for i in range(9)] for j in range(9)]
+        self.changeable = [[True for i in range(9)] for j in range(9)]
 
     def __str__(self):
         """String representation for printing in the command line."""

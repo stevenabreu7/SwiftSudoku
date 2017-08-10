@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B04485D01EFD021F00393CE3 /* GameSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04485CF1EFD021F00393CE3 /* GameSceneViewController.swift */; };
 		B0B5C9951EC1B05500F33BFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B5C9941EC1B05500F33BFA /* AppDelegate.swift */; };
 		B0B5C9971EC1B05500F33BFA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0B5C9961EC1B05500F33BFA /* GameScene.sks */; };
 		B0B5C9991EC1B05500F33BFA /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0B5C9981EC1B05500F33BFA /* Actions.sks */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B04485CF1EFD021F00393CE3 /* GameSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneViewController.swift; sourceTree = "<group>"; };
 		B0B5C9911EC1B05500F33BFA /* Sudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0B5C9941EC1B05500F33BFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0B5C9961EC1B05500F33BFA /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -30,7 +32,7 @@
 		B0B5C9A41EC1B05500F33BFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B0B5C9A61EC1B05500F33BFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0B5C9AD1EC1B90A00F33BFA /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
-		B0B5C9AF1EC3AF1C00F33BFA /* SolveBoard.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = SolveBoard.playground; sourceTree = "<group>"; };
+		B0B5C9AF1EC3AF1C00F33BFA /* SolveBoard.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = SolveBoard.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,9 +69,10 @@
 				B0B5C9961EC1B05500F33BFA /* GameScene.sks */,
 				B0B5C9981EC1B05500F33BFA /* Actions.sks */,
 				B0B5C99A1EC1B05500F33BFA /* GameScene.swift */,
+				B04485CF1EFD021F00393CE3 /* GameSceneViewController.swift */,
+				B0B5C99C1EC1B05500F33BFA /* GameViewController.swift */,
 				B0B5C9AD1EC1B90A00F33BFA /* Board.swift */,
 				B0B5C9AF1EC3AF1C00F33BFA /* SolveBoard.playground */,
-				B0B5C99C1EC1B05500F33BFA /* GameViewController.swift */,
 				B0B5C99E1EC1B05500F33BFA /* Main.storyboard */,
 				B0B5C9A11EC1B05500F33BFA /* Assets.xcassets */,
 				B0B5C9A31EC1B05500F33BFA /* LaunchScreen.storyboard */,
@@ -156,6 +159,7 @@
 				B0B5C99B1EC1B05500F33BFA /* GameScene.swift in Sources */,
 				B0B5C99D1EC1B05500F33BFA /* GameViewController.swift in Sources */,
 				B0B5C9AE1EC1B90A00F33BFA /* Board.swift in Sources */,
+				B04485D01EFD021F00393CE3 /* GameSceneViewController.swift in Sources */,
 				B0B5C9951EC1B05500F33BFA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,6 +292,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.stevenabreu.Sudoku;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -302,6 +307,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.stevenabreu.Sudoku;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -324,6 +330,7 @@
 				B0B5C9AB1EC1B05500F33BFA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

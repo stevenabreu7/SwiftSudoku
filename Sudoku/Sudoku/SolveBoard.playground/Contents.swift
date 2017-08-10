@@ -2,6 +2,11 @@
 
 import UIKit
 
+for i in 1...20 {
+    arc4random_uniform(9)
+}
+
+
 func solution(_ fields: [[Int]]) -> Bool {
     for i in 0...8 {
         for j in 0...8 {

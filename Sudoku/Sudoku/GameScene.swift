@@ -26,8 +26,8 @@ class GameScene: SKScene {
     func setupBoard() {
         let _ = "726493815315728946489651237852147693673985124941362758194836572567214389238579461"
         let _ = "000490815315720940489651207852140090673985124941300758194806572000214389038579460"
-        let _ = "000000810000720040400000207000140090673000000000300700004806572000200009038570000"
         board = Board(board: "726493815315728946489651237852147693673985124941362758194836572567214389238579460")
+        board = Board(board: "000000810000720040400000207000140090673000000000300700004806572000200009038570000")
         
         for i in 0...8 {
             for j in 0...8 {
@@ -48,6 +48,7 @@ class GameScene: SKScene {
             title.name = "titleLabel"
             title.position = CGPoint(x: Double(i) * 7.5, y: Double(0.375 * self.size.height - CGFloat(i) * 5.0))
             title.fontColor = UIColor(white: CGFloat(0.1490196078) + CGFloat(i) * 0.3, alpha: 1.0)
+            title.fontColor = UIColor.clear
             title.fontSize = 160
             title.zPosition = CGFloat(10 - i)
             title.fontName = "Futura-CondensedMedium"
