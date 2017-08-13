@@ -11,6 +11,8 @@ import SpriteKit
 
 class GameSceneViewController: UIViewController {
     
+    var difficulty: Difficulty!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,6 +22,8 @@ class GameSceneViewController: UIViewController {
                 let scene =  gameScene as! GameScene
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
+                scene.difficulty = self.difficulty
+                scene.vc = self
                 
                 // Present the scene
                 view.presentScene(scene)
@@ -30,6 +34,10 @@ class GameSceneViewController: UIViewController {
             view.showsFPS = true
             view.showsNodeCount = true
         }
+    }
+    
+    func close() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     override var shouldAutorotate: Bool {

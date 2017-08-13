@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B02D438C1F3C85CD006CB773 /* CreationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02D438B1F3C85CD006CB773 /* CreationService.swift */; };
 		B04485D01EFD021F00393CE3 /* GameSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04485CF1EFD021F00393CE3 /* GameSceneViewController.swift */; };
 		B0B5C9951EC1B05500F33BFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B5C9941EC1B05500F33BFA /* AppDelegate.swift */; };
 		B0B5C9971EC1B05500F33BFA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0B5C9961EC1B05500F33BFA /* GameScene.sks */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B02D438B1F3C85CD006CB773 /* CreationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreationService.swift; sourceTree = "<group>"; };
 		B04485CF1EFD021F00393CE3 /* GameSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneViewController.swift; sourceTree = "<group>"; };
 		B0B5C9911EC1B05500F33BFA /* Sudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0B5C9941EC1B05500F33BFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				B0B5C9941EC1B05500F33BFA /* AppDelegate.swift */,
 				B0B5C9961EC1B05500F33BFA /* GameScene.sks */,
 				B0B5C9981EC1B05500F33BFA /* Actions.sks */,
+				B02D438B1F3C85CD006CB773 /* CreationService.swift */,
 				B0B5C99A1EC1B05500F33BFA /* GameScene.swift */,
 				B04485CF1EFD021F00393CE3 /* GameSceneViewController.swift */,
 				B0B5C99C1EC1B05500F33BFA /* GameViewController.swift */,
@@ -160,6 +163,7 @@
 				B0B5C99D1EC1B05500F33BFA /* GameViewController.swift in Sources */,
 				B0B5C9AE1EC1B90A00F33BFA /* Board.swift in Sources */,
 				B04485D01EFD021F00393CE3 /* GameSceneViewController.swift in Sources */,
+				B02D438C1F3C85CD006CB773 /* CreationService.swift in Sources */,
 				B0B5C9951EC1B05500F33BFA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

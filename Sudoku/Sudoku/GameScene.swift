@@ -18,16 +18,16 @@ class GameScene: SKScene {
     var touched = (-1,-1)
     var board: Board!
     
+    var difficulty: Difficulty!
+    var vc: GameSceneViewController!
+    
     override func didMove(to view: SKView) {
         setupView()
         setupBoard()
     }
     
     func setupBoard() {
-        let _ = "726493815315728946489651237852147693673985124941362758194836572567214389238579461"
-        let _ = "000490815315720940489651207852140090673985124941300758194806572000214389038579460"
-        board = Board(board: "726493815315728946489651237852147693673985124941362758194836572567214389238579460")
-        board = Board(board: "000000810000720040400000207000140090673000000000300700004806572000200009038570000")
+        board = Board(self.difficulty)
         
         for i in 0...8 {
             for j in 0...8 {
@@ -57,6 +57,7 @@ class GameScene: SKScene {
         
         // game label
         gameLabel = SKLabelNode(fontNamed: "Futura-CondensedMedium")
+        gameLabel.name = "gameLabel"
         gameLabel.position.x = 0.0
         gameLabel.position.y = -0.35 * self.size.height
         gameLabel.fontSize = 50
@@ -215,6 +216,11 @@ class GameScene: SKScene {
                 }
             }
             if touchedNodes.contains(self.childNode(withName: "titleLabel")!) {
+                self.removeFromParent()
+                self.view?.presentScene(nil)
+                self.vc.close()
+            }
+            if touchedNodes.contains(self.childNode(withName: "gameLabel")!) {
                 solveGame()
             }
         }

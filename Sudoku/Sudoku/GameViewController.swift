@@ -12,31 +12,27 @@ import GameplayKit
 
 class GameViewController: UIViewController {
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        handleButtonPress()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.black
     }
     
     @IBAction func easyPressed(_ sender: Any) {
-        handleButtonPress()
+        handleButtonPress(.easy)
     }
     
     @IBAction func mediumPressed(_ sender: Any) {
-        handleButtonPress()
+        handleButtonPress(.medium)
     }
     
     @IBAction func hardPressed(_ sender: Any) {
-        handleButtonPress()
+        handleButtonPress(.hard)
     }
     
-    func handleButtonPress() {
+    func handleButtonPress(_ dif: Difficulty) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let vc = storyBoard.instantiateViewController(withIdentifier: "GameSceneViewController") as! GameSceneViewController
+        vc.difficulty = dif
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

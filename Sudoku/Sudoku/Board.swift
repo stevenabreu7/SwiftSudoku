@@ -8,6 +8,12 @@
 
 import Foundation
 
+enum Difficulty {
+    case easy
+    case medium
+    case hard
+}
+
 class Board {
     
     enum Correctness {
@@ -15,6 +21,7 @@ class Board {
         case incorrect
         case notset
     }
+    
     
     var fields: [[Int]]
     var correct: [[Correctness]]
@@ -33,11 +40,16 @@ class Board {
         self.parseBoard(board: board)
     }
     
-    init(_ random: Bool=false) {
-        self.fields = Array(repeating: Array(repeating: 0, count: 9), count: 9)
-        self.correct = Array(repeating: Array(repeating: .notset, count: 9), count: 9)
-        self.changeable = Array(repeating: Array(repeating: true, count: 9), count: 9)
-        self.fields = self.search(self.fields) ?? Array(repeating: Array(repeating: 0, count: 9), count: 9)
+//    init(_ random: Bool=false) {
+//        self.fields = Array(repeating: Array(repeating: 0, count: 9), count: 9)
+//        self.correct = Array(repeating: Array(repeating: .notset, count: 9), count: 9)
+//        self.changeable = Array(repeating: Array(repeating: true, count: 9), count: 9)
+//        self.fields = self.search(self.fields) ?? Array(repeating: Array(repeating: 0, count: 9), count: 9)
+//    }
+    
+    convenience init(_ difficulty: Difficulty) {
+        let cs = CreationService()
+        self.init(board: cs.getBoard(difficulty))
     }
     
     func getField(i: Int, j: Int) -> Int {
